@@ -27,18 +27,22 @@ let chartHumData = [
 
 let chartTempData = [
   ['Aika', '°C'],
-  ['11:35', 25],
-  ['11:36', 26],
-  ['11:37', 22],
-  ['11:38', 21],
-  ['11:39', 24],
+  ['Loading data', 0],
+  
 ];
 const rows = () => weather.reverse().map(temphum => {
   if(chartHumData[1][0]==='Loading data')
   {
     chartHumData.pop();
   }
+  if(chartTempData[1][0]==='Loading data')
+  {
+    chartTempData.pop();
+  }
   chartHumData.push([String(convertUTCDateToLocalDate(new Date(temphum.Timestamp))).split(' ')[4], parseInt(temphum.Hum)]);
+
+  chartTempData.push([String(convertUTCDateToLocalDate(new Date(temphum.Timestamp))).split(' ')[4], parseInt(temphum.Temp)]);
+
   return <div key={humtempkey++}>
     <b>Klo: </b>{String(convertUTCDateToLocalDate(new Date(temphum.Timestamp))).split(' ')[4]}&nbsp;&nbsp;  
     <b>Ilmankosteus: </b>{temphum.Hum}%&nbsp;&nbsp;  
